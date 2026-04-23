@@ -2,6 +2,8 @@ name: CI-Polaris-PR-Comment
 on:
     pull_request:
       branches: [main, master]
+    push:
+      branches: [main, master]
 
 jobs:
     polaris-pr-scan:
