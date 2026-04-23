@@ -1,0 +1,27 @@
+name: CI-Polaris-PR-Comment
+on:
+    pull_request:
+      branches: [main, master]
+
+jobs:
+    polaris-pr-scan:
+      runs-on: ubuntu-latest
+      steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '14'
+
+      - name: Polaris PR Comment Scan
+        uses: blackduck-inc/black-duck-security-scan@v2
+        with:
+          polaris_server_url: ${{ vars.POLARIS_SERVER_URL }}
+          polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
+          polaris_application_name: ${{ github.event.repository.name }}
+          polaris_project_name: ${{ github.event.repository.name }}
+          polaris_assessment_types: "SCA,SAST"
+          polaris_prComment_enabled: true
+          github_token: ${{ secrets.TOKENACTION }}
